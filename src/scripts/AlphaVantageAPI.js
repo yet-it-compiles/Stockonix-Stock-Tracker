@@ -8,7 +8,7 @@
  * @class AlphaVantageAPI
  */
 
-class AlphaVantageAPI {
+export class AlphaVantageAPI {
     constructor(requestedStock = "IBM") {
         this.requestedStock = requestedStock;
         this.alpha = require('alphavantage')({ key: 'WX5GQNRSWDWX1NZT' });
@@ -39,16 +39,19 @@ class AlphaVantageAPI {
      * descriptions, PERatio, and EPS.
      */
     async getCompanyInformation() {
-        const data =
-            await this.alpha.fundamental.company_overview(this.requestedStock);
-        const { Description, PERatio, EPS, beta } = data;
-        return { Description, PERatio, EPS, beta };
+        const data = await this.alpha.fundamental.company_overview(this.requestedStock);
+
+        const { 'Description': companyDescription, 'PERatio': PERatio,
+            EPS, 'Beta': beta } = data;
+
+        return { companyDescription, PERatio, EPS, beta };
     }
 }
 
+export
 
-// ============================== API Retrieval 
-const alphaVantageAPI = new AlphaVantageAPI();
+    // ============================== API Retrieval ==============================
+    const alphaVantageAPI = new AlphaVantageAPI();
 
 alphaVantageAPI.getStockInformation()
     .then(({ symbol, open, high, low, currentPrice, volume, previousClose }) => {
@@ -57,19 +60,17 @@ alphaVantageAPI.getStockInformation()
         console.log(`High: $${parseFloat(high).toFixed(2)}`);
         console.log(`Low: $${parseFloat(low).toFixed(2)}`);
         console.log(`Current Price: $${parseFloat(currentPrice).toFixed(2)}`);
-        console.log(`Volume: ${parseFloat(volume).toLocaleString(undefined, { groupingSeparator: "'" })}`);
-
+        console.log(`Volume: ${parseFloat(volume).toLocaleString(undefined,
+            { groupingSeparator: "'" })}`);
         console.log(`Previous Close: $${parseFloat(previousClose).toFixed(2)}`);
     });
 
-
-/**
- * alphaVantageAPI.getCompanyInformation()
-    .then(({ Description, PERatio, EPS, beta }) => {
-        console.log(`\nCompany Description: ${Description}`);
-        console.log(`Company PERatio: ${PERatio}`);
-        console.log(`Company EPS: ${EPS}\n`);
-        console.log(`Beta: ${beta}\n`);
+alphaVantageAPI.getCompanyInformation()
+    .then(({ companyDescription, PERatio, EPS, beta }) => {
+        console.log('\nCompany Description:\n', companyDescription);
+        console.log(`\nCompany PE Ratio:`, PERatio,
+            'times its earnings per share');
+        console.log(`Company EPS: $${parseFloat(EPS).toFixed(2)} per share`);
+        console.log(`Beta: ${beta}`);
     });
 
- */
