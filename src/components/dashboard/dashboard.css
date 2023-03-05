@@ -1,7 +1,6 @@
 /*
     Defines the rules to style the Stockonix Dashboard.
 */
-
 body {
 	background-color: #073158;
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -21,6 +20,12 @@ body {
 	cursor: pointer;
 }
 
+.button:hover {
+	box-shadow: 0px 15px 25px -5px rgba(79, 91, 102, 0.4);
+	transform: scale(1.03);
+}
+
+/* Defines the styling rules for each button, and assigning them to an animation, and their own unique color*/
 #edit-widget-button {
 	position: absolute;
 	top: 3%;
@@ -39,7 +44,7 @@ body {
 	border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-/* Defines the appearance of both support spans */
+/* Defines the appearance of both support spans displaying the current price currency denomination, along with percent change */
 #denomination {
 	position: relative;
 	top: -10px;
@@ -53,6 +58,12 @@ body {
 	color: #8d8686;
 }
 
+#price-change {
+	position: relative;
+	top: -5px;
+	right: -10px;
+}
+
 #percent-change {
 	position: relative;
 	top: -2px;
@@ -61,7 +72,36 @@ body {
 	font-size: 14px;
 }
 
-/* Defines the container for each stock*/
+/* Defines the style rules for the initial state of each widget.*/
+#stock-container-initial {
+	position: absolute;
+	width: 100px;
+	height: 100px;
+	padding: 20px;
+
+	color: rgb(255, 255, 255);
+	background: radial-gradient(
+		91.71% 118.06% at 2.29% 3.32%,
+		#868a91 0%,
+		#61656e 53.27%,
+		#454953 100%
+	);
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 15px;
+
+	cursor: pointer;
+}
+
+#add-stock {
+	display: flex;
+	transform: translate(25%, -25%);
+
+	font-size: 50px;
+
+	color: aliceblue;
+}
+
+/* Defines the styling rules for each stock container, by flexibly formatting each container based on its information*/
 #stock-container {
 	position: absolute;
 	width: auto;
@@ -79,6 +119,7 @@ body {
 	border-radius: 15px;
 }
 
+/* Defines the JS data objects style rules by centering at the bottom of the container */
 #last-updated {
 	position: relative;
 	left: 50%;
