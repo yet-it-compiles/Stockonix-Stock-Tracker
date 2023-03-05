@@ -1,9 +1,4 @@
-/**
- * 
- */
-
 import React, { useState } from "react";
-import AlphaVantageAPI from '../../scripts/AlphaVantageAPI.js';
 import './widget.css';
 
 /**

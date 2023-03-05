@@ -40,7 +40,6 @@ export class AlphaVantageAPI {
      */
     async getCompanyInformation() {
         const data = await this.alpha.fundamental.company_overview(this.requestedStock);
-
         const { 'Description': companyDescription, 'PERatio': PERatio,
             EPS, 'Beta': beta } = data;
 
@@ -48,10 +47,10 @@ export class AlphaVantageAPI {
     }
 }
 
-export
+export default AlphaVantageAPI;
 
-    // ============================== API Retrieval ==============================
-    const alphaVantageAPI = new AlphaVantageAPI();
+// ============================== API Retrieval ==============================
+const alphaVantageAPI = new AlphaVantageAPI();
 
 alphaVantageAPI.getStockInformation()
     .then(({ symbol, open, high, low, currentPrice, volume, previousClose }) => {
