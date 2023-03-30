@@ -1,11 +1,11 @@
-// TradingViewWidget.jsx
-
+/**
+ * This module defines the historical chart data
+ */
 import React, { useEffect, useRef } from 'react';
-
 
 let tvScriptLoadingPromise;
 
-export default function TradingViewWidget({stockData}) {
+export default function TradingViewWidget({ stockData }) {
   const onLoadScriptRef = useRef();
   const symbol = stockData.symbol;
   useEffect(
@@ -45,7 +45,7 @@ export default function TradingViewWidget({stockData}) {
             hide_side_toolbar: false,
             allow_symbol_change: true,
             save_image: false,
-            studies: ["ROC@tv-basicstudies","StochasticRSI@tv-basicstudies","MASimple@tv-basicstudies"],
+            studies: ["ROC@tv-basicstudies", "StochasticRSI@tv-basicstudies", "MASimple@tv-basicstudies"],
             show_popup_button: true,
             popup_width: "1000",
             popup_height: "650",
@@ -54,13 +54,12 @@ export default function TradingViewWidget({stockData}) {
         }
       }
     },
-    []
   );
 
   return (
     <div className='tradingview-widget-container'>
       <div id='technical-analysis-chart-demo' />
-      <div/>
+      <div />
     </div>
   );
 }
