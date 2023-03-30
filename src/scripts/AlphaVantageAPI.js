@@ -9,7 +9,7 @@
  */
 
 export class AlphaVantageAPI {
-    constructor(requestedStock = "IBM") {
+    constructor(requestedStock = "TSLA") {
         this.requestedStock = requestedStock;
         this.alpha = require('alphavantage')({ key: 'WX5GQNRSWDWX1NZT' });
     }
@@ -48,28 +48,3 @@ export class AlphaVantageAPI {
 }
 
 export default AlphaVantageAPI;
-
-// ============================== API Retrieval ==============================
-const alphaVantageAPI = new AlphaVantageAPI();
-
-alphaVantageAPI.getStockInformation()
-    .then(({ symbol, open, high, low, currentPrice, volume, previousClose }) => {
-        console.log(`Symbol: ${symbol}`);
-        console.log(`Open: $${parseFloat(open).toFixed(2)}`);
-        console.log(`High: $${parseFloat(high).toFixed(2)}`);
-        console.log(`Low: $${parseFloat(low).toFixed(2)}`);
-        console.log(`Current Price: $${parseFloat(currentPrice).toFixed(2)}`);
-        console.log(`Volume: ${parseFloat(volume).toLocaleString(undefined,
-            { groupingSeparator: "'" })}`);
-        console.log(`Previous Close: $${parseFloat(previousClose).toFixed(2)}`);
-    });
-
-alphaVantageAPI.getCompanyInformation()
-    .then(({ companyDescription, PERatio, EPS, beta }) => {
-        console.log('\nCompany Description:\n', companyDescription);
-        console.log(`\nCompany PE Ratio:`, PERatio,
-            'times its earnings per share');
-        console.log(`Company EPS: $${parseFloat(EPS).toFixed(2)} per share`);
-        console.log(`Beta: ${beta}`);
-    });
-
