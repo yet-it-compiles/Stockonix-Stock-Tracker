@@ -1,4 +1,4 @@
-# Stockonix - _Tracking At A Glance_
+# Stockonix - _Tracking At A Glance_ [In Progess for Version 2.0]
 
 
 ![Login Page](https://user-images.githubusercontent.com/43221618/227778853-de016606-a45f-48d4-bc18-0fab4801326b.png)
