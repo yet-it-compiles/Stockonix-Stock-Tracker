@@ -1,33 +1,38 @@
 /**
  * @file DisplayModal.jsx
- * @description Defines a reusable modal that will display both a child, and close button.
+ * @description Defines a popup modal that ask the user to enter a stock symbol.
  * @requires React
  * @requires './modal.css'
  */
-
-import React from "react";
+import Modal from "react-modal";
 import "./modal.css";
 
+// Accessibility feature that ensures screen readers will ignore elements outside the modal.
+Modal.setAppElement(document.body);
+
 /**
- * @description - DisplayModal Component - A reusable modal component for displaying content
- * 
- * @param {Object} props - Takes two props by its parent component
- * @param {ReactNode} children - Child node that renders in the modal inside the modal
- * @param {Function} onClose - Callback function to close the
- * modal
- * @returns {JSX.Element} - Returns the JSX markup of the modal
-*/
-const DisplayModal = ({ children, onClose }) => {
+ * Defines a modal that will be used to ask the user the stock symbol they would like to track
+ * @param {*} param 
+ * @returns 
+ */
+const DisplayModal = ({ isOpen, onRequestClose }) => {
     return (
-        <div className="modal-wrapper">
-            <div className="modal">
-                <span className="close" onClick={onClose}>
-                    &times;
-                </span>
-                {children}
-            </div>
-        </div>
+        <Modal
+            isOpen={isOpen}
+            onRequestClose={onRequestClose}
+            contentLabel="Example Modal"
+            className="modal"
+            overlayClassName="modal-wrapper"
+        >
+            <h2>Stock Selection</h2>
+            <label htmlFor="add-stock">Enter a stock symbol you would like to track: </label>
+            <input type="text" id="add-stock" />
+            <br />
+            <button onClick={onRequestClose}>Submit</button>
+            <br />
+            <button onClick={onRequestClose}>Close</button>
+        </Modal>
     );
-}
+};
 
 export default DisplayModal;
