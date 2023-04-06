@@ -1,14 +1,33 @@
 /**
  * @file Dashboard.jsx
+ * 
  * @description Defines the initial layout of the dashboard by 
- * creating a dense array, where each element represents a widget and is given a unique id based on its index within the array.
+ * creating a dense array, where each element represents a widget and 
+ * is given a unique id based on its index within the array.
+ * 
  * @requires React
- * @requires './widgets.css'
  */
 
 import React, { useState } from "react";
 import DisplayModal from "../modal/DisplayModal";
-import "./widgets.css";
+import DefaultWidget from "../default-widget/DefaultWidget";
+import TrackingWidget from "../update-widget/TrackingWidget";
+
+/**
+ * @TODO
+ * @returns 
+ */
+const StockonixDashboard = () => {
+
+    /**
+     * @TODO 
+     */
+    const displayWidgets = Array.from({ length: 10 }, (_, index) => (
+        <RenderWidgets widgetid={index++} key={index} />
+    ));
+
+    return <div className="grid-layout">{displayWidgets}</div>;
+}
 
 /**
  * Defines a default widget, and assigns a modal to request a stock 
@@ -16,9 +35,13 @@ import "./widgets.css";
  * 
  * @returns a default widget intractable widget 
  */
-const DefaultWidget = () => {
+const RenderWidgets = () => {
+
     // Determines if the modal is currently opened or closed
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // Determines if a widget is actively tracking a stock or not
+    const [requestedStockToQuery, setStockTracked] = useState('');
 
     /**
      * An event handler that enables the modal to open when the user 
@@ -29,39 +52,47 @@ const DefaultWidget = () => {
     };
 
     /**
-     * An event handler that closes the modal window on request
-     */
+    * An event handler that closes the modal window on request
+    */
     const handleCloseModal = () => {
         setIsModalOpen(() => false);
     };
 
-    return (
-        <>
-            <div className="widget-default" onClick={handleOpenModal}>
-                <p>Add Stock</p>
-            </div>
-
-            <DisplayModal isOpen={isModalOpen} isClosed={handleCloseModal} />
-        </>
-    );
-};
-
-/**
- * Initializes a dense array of length 10, representing each widget 
- * and assigns them a unique key determined by their index.
- * 
- * @returns JSX element representing the dashboards initial 5x2 layout
- */
-const StockonixDashboard = () => {
+    /**
+     * An event handler that checks to see if a stock has been requested for 
+     * a specific widget, if so, sets the tracked stock and closes the modal.
+     * 
+     * @TODO
+     * @param {*} requestedStockToQuery the stock the user would like to track
+     */
+    const handleWidgetSetting = (requestedStockToQuery) => {
+        if (requestedStockToQuery !== "") {
+            setStockTracked(() => requestedStockToQuery);
+            setIsModalOpen(() => false);
+        }
+    }
 
     /**
-     * Declares a dense array of length 10, representing each widget
+     * Checks to see if the widget has received a stock to track, if it 
+     * does, then it will change appearance from default to stock tracking.
      */
-    const displayWidgets = Array.from({ length: 10 }, (_, index) => (
-        <DefaultWidget widgetid={index++} key={index} />
-    ));
+    const widgetContent = requestedStockToQuery ? (
+        <>
+            <TrackingWidget theRequestedStock={requestedStockToQuery} onClick={handleOpenModal} />
+        </>
+    ) : (
+        <>
+            <DefaultWidget onClick={handleOpenModal} />
+        </>
+    );
 
-    return <div className="grid-layout">{displayWidgets}</div>;
-}
+    return (
+        <>
+            {widgetContent}
+            <DisplayModal isOpen={isModalOpen} onRequestClose={handleCloseModal} onSelectStock={handleWidgetSetting} />
+        </>
+
+    );
+};
 
 export default StockonixDashboard;
